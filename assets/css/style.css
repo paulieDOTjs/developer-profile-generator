@@ -15,7 +15,7 @@ body {
 }
 
 .top, .bottom {
-    background-color: black;
+    background-color: #373737;
 }
 
 .middle {
@@ -31,7 +31,6 @@ body {
     margin-top: 0.5in;
     width: 7.84in;
     margin-left: 0.18in;
-    background-color: salmon;
     position: absolute;
     border-radius: 10px;
 }
@@ -86,8 +85,7 @@ body {
     position: absolute;
     width: 2.95in;
     height: 0.78in;
-    background-color: salmon;
-    border: black 2px solid;
+    border: #373737 2px solid;
     border-radius: 10px;
     text-align: center;
 }

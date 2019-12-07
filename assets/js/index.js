@@ -4,6 +4,7 @@ function initProgram() {
     const fs = require("fs");
 
     let username;
+    let userCompany;
     let userRealName;
     let profileImageURL;
     let userLocation;
@@ -14,6 +15,7 @@ function initProgram() {
     let numberOfFollowers
     let numberOfGitHubStars;
     let numberOfUsersFollowing;
+    let userFavColor;
 
 
 
@@ -26,8 +28,9 @@ function initProgram() {
         message: "What is your favorite color?",
         name: "favoriteColor"
     }])
-        .then(function ({ usernameProvided }) {
-            username = usernameProvided
+        .then(function ({ usernameProvided, favoriteColor }) {
+            username = usernameProvided;
+            userFavColor = favoriteColor;
             const queryUrl = `https://api.github.com/users/${username}`;
     goLook(queryUrl);
         });
@@ -42,19 +45,19 @@ function initProgram() {
 
         axios.get(URL)
             .then(function (response) {
-                // console.log('hi')
-                // console.log(response.data);
+                console.log(response.data);
                 // console.log(Object.keys(response.data));
 
                 profileImageURL = response.data.avatar_url;
                 userRealName = response.data.name;
-                // userLocation = response.data.
-                userGitHubProfile = `https://api.github.com/users/${username}`
+                userLocation = response.data.location;
+                userCompany = response.data.company;
+                userGitHubProfile = response.data.html_url;
                 userBlog = response.data.blog;
                 userBio = response.data.bio;
                 numberOfPublicRepos = response.data.public_repos;
                 numberOfFollowers = response.data.followers;
-                numberOfGitHubStars = response.data.starred_url;
+                numberOfGitHubStars = response.data.starred_url.length;
                 numberOfUsersFollowing = response.data.following;
 
                 makeFile();
@@ -94,11 +97,11 @@ function initProgram() {
             <div class="middle"></div>
             <div class="bottom"></div>
         
-            <div class="top-card"></div>
+            <div class="top-card" style="background-color: ${userFavColor}"></div>
             <img src="${profileImageURL}" class="pic"></src>
             <h1 class="hi">Hi!</h1>
             <h1 class="my-name">My name is ${userRealName}</h1>
-            <h2 class="currently-at">I'm currently @ ${userLocation}</h2>
+            <h2 class="currently-at">I'm currently @ ${userCompany}</h2>
             <h2 class="more-info">
                 <span><a href="">${userLocation}</a></span>
                 <span><a href="${userGitHubProfile}">Github</a></span>
@@ -108,9 +111,9 @@ function initProgram() {
         
         
             <p class="bio">
-            ${userBlog}
+            ${userBio}
             </p>
-            <div class="cards card-left card-top">
+            <div class="cards card-left card-top" style="background-color: ${userFavColor}">
                 <h2>
                     Public Repositories
                 </h2>
@@ -118,7 +121,7 @@ function initProgram() {
                 ${numberOfPublicRepos}
                 </h3>
             </div>
-            <div class="cards card-right card-top">
+            <div class="cards card-right card-top" style="background-color: ${userFavColor}">
                 <h2>
                     Github Stars
                 </h2>
@@ -126,7 +129,7 @@ function initProgram() {
                 ${numberOfGitHubStars}
                 </h3>
             </div>
-            <div class="cards card-left card-bottom">
+            <div class="cards card-left card-bottom" style="background-color: ${userFavColor}">
                 <h2>
                     Followers
                 </h2>
@@ -134,7 +137,7 @@ function initProgram() {
                 ${numberOfFollowers}
                 </h3>
             </div>
-            <div class="cards card-right card-bottom">
+            <div class="cards card-right card-bottom" style="background-color: ${userFavColor}">
                 <h2>
                     Following
                 </h2>
