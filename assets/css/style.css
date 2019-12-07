@@ -1,0 +1,76 @@
+body {
+    margin: 0;
+    margin-left: .15in;
+    margin-right: .15in;
+    margin-top: .18in;
+    margin-bottom: .22in;
+}
+
+.top, .middle, .bottom {
+    height: 3.53in;
+    width: 8.2in;
+    position: absolute;
+    margin: 0;
+}
+
+.top, .bottom {
+    background-color: blue;
+}
+
+.middle {
+    margin-top: 3.53in;
+}
+
+.bottom {
+    margin-top: 7.06in;
+}
+
+.top-card {
+    height: 3.25in;
+    margin-top: 0.5in;
+    width: 7.84in;
+    margin-left: 0.18in;
+    background-color: aquamarine;
+    position: absolute;
+}
+
+.pic {
+    margin-top: 0.25in;
+    height: 1.64in;
+    width: 1.64in;
+    margin-left: 3.43in;
+    background-color: black;
+    position: absolute;
+    border-radius: 50%;
+}
+
+.bio{
+    position: absolute;
+    margin-top: 4in;
+    width: 7.84in;
+    margin-left: 0.18in;
+    text-align: center;
+}
+
+.cards{
+    position: absolute;
+    width: 3.09in;
+    height: 0.78in;
+    background-color: black;
+}
+
+.card-left{
+    margin-left: 1in;
+}
+
+.card-right{
+    margin-left: 4.41in;
+}
+
+.card-top{
+    margin-top: 4.72in;
+}
+
+.card-bottom{
+    margin-top: 5.6in;
+}
