@@ -76,7 +76,7 @@ function initProgram() {
     }
     function makeFile() {
 
-        fs.writeFile(`${username}.html`, process.env.STR, function (err) {
+        fs.writeFile(`${username}.html`, 'sup', function (err) {
 
             if (err) {
                 return console.log(err);
