@@ -1,7 +1,12 @@
 function initProgram() {
     const axios = require("axios");
     const inquirer = require("inquirer");
-    const fs = require("fs");
+    const fs = require('fs'),
+        convertFactory = require('electron-html-to');
+
+    const conversion = convertFactory({
+        converterPath: convertFactory.converters.PDF
+    });
 
     let username;
     let userCompany;
@@ -46,7 +51,7 @@ function initProgram() {
         axios.get(URL)
             .then(function (response) {
                 console.log(response.data);
-                // console.log(Object.keys(response.data));
+                console.log(Object.keys(response));
 
                 profileImageURL = response.data.avatar_url;
                 userRealName = response.data.name;
@@ -57,8 +62,8 @@ function initProgram() {
                 userBio = response.data.bio;
                 numberOfPublicRepos = response.data.public_repos;
                 numberOfFollowers = response.data.followers;
-                numberOfGitHubStars = response.data.starred_url.length;
-                numberOfUsersFollowing = response.data.following;
+                // numberOfGitHubStars = response.data.starred_url.length;
+                numberOfUsersFollowing = response.data.following; star
 
                 makeFile();
             })
@@ -75,8 +80,7 @@ function initProgram() {
 
 
     function makeFile() {
-
-        fs.writeFile(`../../${username}.html`, `
+        const resume = `
         
         <!DOCTYPE html>
         <html lang="en">
@@ -356,19 +360,18 @@ function initProgram() {
         </body>
         
         </html>
-        
-        
-        
-        
-        `, function (err) {
+        `
 
+        conversion({ html: resume }, function (err, result) {
             if (err) {
-                return console.log(err);
+                return console.error(err);
             }
 
-            console.log("The file has been written.");
-
+            console.log(result.numberOfPages);
+            console.log(result.logs);
+            result.stream.pipe(fs.createWriteStream(`../../${username}.html`));
+            conversion.kill(); // necessary if you use the electron-server strategy, see bellow for details
         });
-    }
 
-} initProgram();
+    }
+} initProgram()
