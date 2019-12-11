@@ -1,80 +1,4 @@
-function initProgram() {
-    const axios = require("axios");
-    const inquirer = require("inquirer");
-    const fs = require('fs');
-    const pdf = require('html-pdf');
 
-
-    let username;
-    let userCompany;
-    let userRealName;
-    let profileImageURL;
-    let userLocation;
-    let userGitHubProfile;
-    let userBlog;
-    let userBio;
-    let numberOfPublicRepos;
-    let numberOfFollowers
-    let numberOfGitHubStars;
-    let numberOfUsersFollowing;
-    let userFavColor;
-
-
-
-
-    inquirer.prompt([{
-        message: "Enter your GitHub username",
-        name: "usernameProvided"
-    },
-    {
-        message: "What is your favorite color?",
-        name: "favoriteColor"
-    }])
-        .then(function ({ usernameProvided, favoriteColor }) {
-            username = usernameProvided;
-            userFavColor = favoriteColor;
-            const queryUrl = `https://api.github.com/users/${username}`;
-            goLookOne(queryUrl);
-        });
-
-
-
-
-
-
-
-    function goLookOne(URL) {
-
-        axios.get(URL)
-            .then(function (response) {
-
-                profileImageURL = response.data.avatar_url;
-                userRealName = response.data.name;
-                userLocation = response.data.location;
-                userCompany = response.data.company;
-                userGitHubProfile = response.data.html_url;
-                userBlog = response.data.blog;
-                userBio = response.data.bio;
-                numberOfPublicRepos = response.data.public_repos;
-                numberOfFollowers = response.data.followers;
-                numberOfUsersFollowing = response.data.following;
-                makeHTMLFile(URL);
-            })
-            .catch(function (error) {
-                // handle error
-                console.log(error);
-            })
-            .finally(function () {
-                // always executed
-            });
-    }
-
-
-
-    // numberOfGitHubStars = response.data.starred_url.length;
-
-    function makeHTMLFile() {
-        const resume = `
         
         <!DOCTYPE html>
         <html lang="en">
@@ -303,82 +227,55 @@ function initProgram() {
             <div class="middle"></div>
             <div class="bottom"></div>
         
-            <div class="top-card" style="background: ${userFavColor}"></div>
-            <img src="${profileImageURL}" class="pic"></src>
+            <div class="top-card" style="background: salmon"></div>
+            <img src="https://avatars3.githubusercontent.com/u/55669617?v=4" class="pic"></src>
             <h1 class="hi">Hi!</h1>
-            <h1 class="my-name">My name is ${userRealName}</h1>
-            <h2 class="currently-at">I'm currently @ ${userCompany}</h2>
+            <h1 class="my-name">My name is Paul Hendrickson</h1>
+            <h2 class="currently-at">I'm currently @ University of Minnesota</h2>
             <h2 class="more-info">
-                <span><a href="https://www.google.com/maps/place/${userLocation}">${userLocation}</a></span>
-                <span><a href="${userGitHubProfile}">Github</a></span>
-                <span><a href="${userBlog}">Blog</a></span>
+                <span><a href="https://www.google.com/maps/place/Minneapolis, Minnesota">Minneapolis, Minnesota</a></span>
+                <span><a href="https://github.com/paulrobhendrickson">Github</a></span>
+                <span><a href="https://paulrobhendrickson.github.io/portfolio/">Blog</a></span>
             </h2>
         
         
         
             <p class="bio">
-            ${userBio}
+            I am a full-stack web developer well-versed in HTML, CSS and javascript, handling both front and back end systems, a music arranger, singer, and songwriter.
             </p>
-            <div class="cards card-left card-top" style="background: ${userFavColor}">
+            <div class="cards card-left card-top" style="background: salmon">
                 <h2>
                     Public Repositories
                 </h2>
                 <h3>
-                ${numberOfPublicRepos}
+                9
                 </h3>
             </div>
-            <div class="cards card-right card-top" style="background: ${userFavColor}">
+            <div class="cards card-right card-top" style="background: salmon">
                 <h2>
                     Github Stars
                 </h2>
                 <h3>
-                ${numberOfGitHubStars}
+                undefined
                 </h3>
             </div>
-            <div class="cards card-left card-bottom" style="background: ${userFavColor}">
+            <div class="cards card-left card-bottom" style="background: salmon">
                 <h2>
                     Followers
                 </h2>
                 <h3>
-                ${numberOfFollowers}
+                12
                 </h3>
             </div>
-            <div class="cards card-right card-bottom" style="background: ${userFavColor}">
+            <div class="cards card-right card-bottom" style="background: salmon">
                 <h2>
                     Following
                 </h2>
                 <h3>
-                ${numberOfUsersFollowing}
+                24
                 </h3>
             </div>
         </body>
         
         </html>
-        `
-
-        fs.writeFile(`./html/${username}.html`, resume, function (err) {
-
-            if (err) {
-                return console.log(err);
-            }
-
-            console.log("Success!");
-
-            makePDFFile();
-        });
-    }
-
-    function makePDFFile() {
-        const html = fs.readFileSync(`./html/${username}.html`, 'utf8');
-        const options = {
-            "height": "14in",
-            "width": "12in",
-        };
-
-        pdf.create(html, options).toFile(`./pdf/${username}.pdf`, function (err, res) {
-            if (err) return console.log(err);
-            console.log(res);
-        });
-    }
-
-} initProgram()
+        
