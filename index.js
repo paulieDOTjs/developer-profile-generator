@@ -34,7 +34,7 @@ function initProgram() {
             username = usernameProvided;
             userFavColor = favoriteColor;
             const queryUrl = `https://api.github.com/users/${username}`;
-            goLook(queryUrl);
+            goLookOne(queryUrl);
         });
 
 
@@ -43,12 +43,10 @@ function initProgram() {
 
 
 
-    function goLook(URL) {
+    function goLookOne(URL) {
 
         axios.get(URL)
             .then(function (response) {
-                console.log(response.data);
-                console.log(Object.keys(response));
 
                 profileImageURL = response.data.avatar_url;
                 userRealName = response.data.name;
@@ -59,10 +57,8 @@ function initProgram() {
                 userBio = response.data.bio;
                 numberOfPublicRepos = response.data.public_repos;
                 numberOfFollowers = response.data.followers;
-                // numberOfGitHubStars = response.data.starred_url.length;
                 numberOfUsersFollowing = response.data.following;
-
-                makeHTMLFile();
+                makeHTMLFile(URL);
             })
             .catch(function (error) {
                 // handle error
@@ -75,6 +71,7 @@ function initProgram() {
 
 
 
+    // numberOfGitHubStars = response.data.starred_url.length;
 
     function makeHTMLFile() {
         const resume = `
@@ -374,8 +371,8 @@ function initProgram() {
     function makePDFFile() {
         const html = fs.readFileSync(`./html/${username}.html`, 'utf8');
         const options = {
-            "height": "14in",     
-            "width": "11in",
+            "height": "14in",
+            "width": "12in",
         };
 
         pdf.create(html, options).toFile(`./pdf/${username}.pdf`, function (err, res) {
