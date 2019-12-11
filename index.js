@@ -309,7 +309,7 @@ function initProgram() {
             <h1 class="my-name">My name is ${userRealName}</h1>
             <h2 class="currently-at">I'm currently @ ${userCompany}</h2>
             <h2 class="more-info">
-                <span><a href="https://www.google.com/maps/place/${userLocation}">${userLocation}</a></span>
+                <span><a href="https://www.google.com/maps/place/${userLocation.split(" ")}">${userLocation}</a></span>
                 <span><a href="${userGitHubProfile}">Github</a></span>
                 <span><a href="${userBlog}">Blog</a></span>
             </h2>
